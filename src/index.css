@@ -1,13 +1,212 @@
+/* index.css */
+
+/* Estilos globales */
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: Arial, sans-serif;
+  background-color: #f7fafc;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/* Contenedor principal */
+.container {
+  padding: 1.5rem;
+  text-align: center;
+}
+
+/* Encabezado */
+.header-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+.header-subtitle {
+  color: #718096;
+}
+
+/* Navegación */
+.nav {
+  margin: 1.5rem 0;
+}
+.nav a {
+  color: #3182ce;
+  text-decoration: none;
+  margin-right: 1rem;
+}
+.nav a:hover {
+  text-decoration: underline;
+}
+
+/* Sección de vehículos */
+.main-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.main-content h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+.main-content p {
+  color: #718096;
+  margin-bottom: 1.5rem;
+}
+
+/* Cuadrícula de tarjetas */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Tarjeta */
+.card {
+  background-color: #fff;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  position: relative;
+}
+
+/* Imagen o espacio para imagen */
+.card-image {
+  height: 150px;
+  background-color: #e2e8f0;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #a0aec0;
+}
+
+/* Texto de la tarjeta */
+.card-title {
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+}
+.card-text {
+  font-size: 0.875rem;
+  color: #4a5568;
+}
+
+/* Botones de edición y eliminación */
+.card-buttons {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  display: flex;
+  gap: 0.5rem;
+}
+.button-icon {
+  background-color: #e2e8f0;
+  border: none;
+  border-radius: 50%;
+  padding: 0.5rem;
+  cursor: pointer;
+}
+.button-icon:hover {
+  background-color: #cbd5e0;
+}
+
+/* Botón flotante */
+.floating-button {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  background-color: #000;
+  color: #fff;
+  padding: 1rem;
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  cursor: pointer;
+}
+.floating-button:hover {
+  background-color: #333;
+}
+
+/* Formulario */
+.form-container {
+  background-color: #fff;
+  padding: 1.5rem;
+  max-width: 500px;
+  width: 100%;
+  margin: 0 auto;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+.form-group {
+  margin-bottom: 1rem;
+}
+.form-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+.form-group input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #cbd5e0;
+  border-radius: 0.25rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.form-group input:focus {
+  border-color: #3182ce;
+}
+.submit-button {
+  background-color: #000;
+  color: #fff;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.submit-button:hover {
+  background-color: #333;
+}
+.add-vehicle-btn {
+  width: 50px;
+  height: 50px;
+  background-color: black;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+  margin: 20px auto;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease;
+}
+
+.add-vehicle-btn:hover {
+  background-color: #333;
+}
+.floating-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.floating-button:hover {
+  background-color: #333;
 }

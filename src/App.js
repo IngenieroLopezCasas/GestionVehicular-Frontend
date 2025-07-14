@@ -1,24 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "./components/home";
+import VehicleDetails from "./components/vehicleDetails";
+import AddVehicle from "./components/AddVehicle";
+import VehicleList from "./components/VehicleList";
+import Bitacora from "./components/Bitacora";
+import RegistrarMarca from "./components/RegistraMarca";
+import EditVehicle from "./components/EditVehicle";
+import SalidaVehiculo from "./components/SalidaVehiculo";
+import CheckList from "./components/CheckList";
+import { Import } from "lucide-react";
+import HistorialVehiculos from "./components/HistorialVehiculos";
+
+
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/historial-vehiculos" element={<HistorialVehiculos/>}></Route>
+        <Route path="/checklist" element={<CheckList />} />
+        <Route path="/salida-vehiculo" element={<SalidaVehiculo />} />
+        <Route path="/edit-vehicle/:id" element={<EditVehicle />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/details/:id" element={<VehicleDetails />} />
+        <Route path="/add-vehicle" element={<AddVehicle />} />
+        <Route path="/vehicles" element={<VehicleList />} />
+        <Route path="/bitacora" element={<Bitacora />} />
+        <Route path="/edit-vehicle/:id" element={<EditVehicle />} />
+        <Route path="/registrar-marca" element={<RegistrarMarca />} />
+      </Routes>
+    </Router>
   );
 }
 

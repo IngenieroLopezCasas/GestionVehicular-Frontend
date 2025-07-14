@@ -1,0 +1,81 @@
+import React, { useState } from "react";
+
+const Bitacora = () => {
+  const [entradas, setEntradas] = useState([]);
+
+  const agregarEntrada = () => {
+    setEntradas([
+      ...entradas,
+      {
+        fecha: "",
+        noEco: "",
+        km: "",
+        conductor: "",
+        folio: "",
+        horaEntrada: "",
+        horaSalida: "",
+        observaciones: "",
+      },
+    ]);
+  };
+
+  const actualizarEntrada = (index, campo, valor) => {
+    const nuevasEntradas = [...entradas];
+    nuevasEntradas[index][campo] = valor;
+    setEntradas(nuevasEntradas);
+  };
+
+  return (
+    <div className="p-4">
+      <h1 className="text-2xl font-bold mb-4">Bitácora de Vehículos</h1>
+      <button
+        onClick={agregarEntrada}
+        className="mb-4 px-4 py-2 bg-blue-600 text-white rounded"
+      >
+        Agregar Entrada
+      </button>
+      <div className="overflow-x-auto">
+        <table className="min-w-full border border-gray-300 text-sm">
+          <thead className="bg-gray-100">
+            <tr>
+              {[
+                "Fecha",
+                "No. Económico",
+                "KM",
+                "Conductor",
+                "Folio SIAF",
+                "Hora Entrada",
+                "Hora Salida",
+                "Observaciones",
+              ].map((titulo, i) => (
+                <th key={i} className="border px-2 py-1 text-left">
+                  {titulo}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {entradas.map((entrada, idx) => (
+              <tr key={idx}>
+                {Object.keys(entrada).map((campo, i) => (
+                  <td key={i} className="border px-2 py-1">
+                    <input
+                      type="text"
+                      value={entrada[campo]}
+                      onChange={(e) =>
+                        actualizarEntrada(idx, campo, e.target.value)
+                      }
+                      className="w-full border px-1 py-0.5 rounded"
+                    />
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+};
+
+export default Bitacora;
