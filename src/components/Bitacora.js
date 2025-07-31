@@ -1,19 +1,23 @@
+// EntryForm.js
+
 import React, { useState, useEffect } from "react";
 import Select from "react-select";
 import api from "../services/api";
 import { useNavigate, Link } from "react-router-dom";
 import { QrReader } from "react-qr-reader";
+import CapturaFotos from "./CapturaFotos"; // 👈 Verifique ruta correcta
 import "./App.css";
 
 const EntryForm = () => {
   const navigate = useNavigate();
   const [vehicleId, setVehicleId] = useState("");
   const [mostrarQR, setMostrarQR] = useState(false);
+  const [mostrarCamara, setMostrarCamara] = useState(false); // Nuevo estado para cámara
   const [vehicleData, setVehicleData] = useState(null);
+  const [idDesplazamiento, setIdDesplazamiento] = useState(null);
   const [entryData, setEntryData] = useState({
     km: "",
     gasolina: "",
-    estado: "",
     idUsuario: "",
     fecha: new Date().toISOString().slice(0, 16),
   });
@@ -33,6 +37,20 @@ const EntryForm = () => {
       });
   }, []);
 
+  const obtenerUltimoDesplazamiento = async (idVehiculo) => {
+    try {
+      const res = await api.get(`/desplazamientos/ultimo/${idVehiculo}`);
+      if (res.data && res.data.IdDesplazamiento) {
+        setIdDesplazamiento(res.data.IdDesplazamiento);
+      } else {
+        console.warn("No se encontró desplazamiento para este vehículo.");
+        setIdDesplazamiento(null);
+      }
+    } catch (err) {
+      console.error("Error al obtener el último desplazamiento:", err);
+    }
+  };
+
   const handleQrReadFromCodigo = async (codigoQR) => {
     const isNumeric = /^\d+$/.test(codigoQR);
     try {
@@ -48,6 +66,7 @@ const EntryForm = () => {
         const idVehiculo = vehiculo.IdVehiculos || vehiculo.IdVehiculo;
         setVehicleId(idVehiculo);
         setVehicleData(vehiculo);
+        obtenerUltimoDesplazamiento(idVehiculo);
       } else {
         alert("Vehículo no encontrado por QR o ID");
       }
@@ -62,6 +81,7 @@ const EntryForm = () => {
       const res = await api.get(`vehicles/entradas/${vehicleId}`);
       if (res.data.status === "ok") {
         setVehicleData(res.data.vehiculo);
+        obtenerUltimoDesplazamiento(vehicleId);
       } else {
         alert("Vehículo no encontrado");
         setVehicleData(null);
@@ -105,23 +125,16 @@ const EntryForm = () => {
         />
         <button onClick={handleQrRead}>Buscar Vehículo</button>
         <button type="button" onClick={() => setMostrarQR(!mostrarQR)}>
-          {mostrarQR ? "Cerrar Cámara" : "Escanear QR"}
+          {mostrarQR ? "Cerrar Cámara QR" : "Escanear QR"}
+        </button>
+        {/* Botón para controlar cámara de captura de fotos */}
+        <button type="button" onClick={() => setMostrarCamara(!mostrarCamara)} style={{ marginLeft: "10px" }}>
+          {mostrarCamara ? "Cerrar Cámara Fotos" : "Abrir Cámara Fotos"}
         </button>
       </div>
 
       {mostrarQR && (
-        <div
-          style={{
-            position: "relative",
-            width: "100%",
-            maxWidth: "500px",
-            height: "400px",
-            margin: "auto",
-            border: "2px solid #ccc",
-            borderRadius: "10px",
-            overflow: "hidden",
-          }}
-        >
+        <div className="qr-box">
           <QrReader
             constraints={{ facingMode: "environment" }}
             onResult={(result, error) => {
@@ -192,14 +205,15 @@ const EntryForm = () => {
             </div>
 
             <div className="form-group">
-              <label>Estado físico:</label>
-              <textarea
-                name="estado"
-                value={entryData.estado}
-                onChange={handleChange}
-                rows="4"
-                required
-              ></textarea>
+              <label>Registrar estado físico del vehículo:</label>
+              <button
+                type="button"
+                className="btn-incidente"
+                onClick={() => navigate(`/evento/${idDesplazamiento}`)}
+                disabled={!idDesplazamiento}
+              >
+                Ir a Formulario de Evento
+              </button>
             </div>
 
             <div className="form-group">
@@ -225,6 +239,14 @@ const EntryForm = () => {
           </form>
         </div>
       </div>
+
+      {/* Mostrar cámara de captura de fotos sólo si se activó y existe vehicleId */}
+      {mostrarCamara && vehicleId && (
+        <div className="entry-fotos">
+          <h3>Captura de Fotos del Vehículo</h3>
+          <CapturaFotos idEvento={vehicleId} />
+        </div>
+      )}
     </div>
   );
 };

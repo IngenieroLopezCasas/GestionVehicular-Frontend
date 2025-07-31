@@ -1,7 +1,7 @@
 // Home.js
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { Plus, Edit, Trash } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom"; // AÑADIDO useNavigate
+import { Plus, Edit, Trash, LogOut } from "lucide-react"; // AÑADIDO LogOut
 import api from "../services/api";
 import "./App.css";
 
@@ -9,6 +9,7 @@ const Home = () => {
   const [vehicles, setVehicles] = useState([]);
   const [expandedCardId, setExpandedCardId] = useState(null);
   const [historial, setHistorial] = useState([]);
+  const navigate = useNavigate(); // NUEVO
 
   useEffect(() => {
     api.get("/vehicles")
@@ -42,11 +43,39 @@ const Home = () => {
     }
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem("usuario");
+    alert("👋 Sesión cerrada correctamente.");
+    navigate("/login");
+  };
+
   return (
     <div className="container">
-      <header>
+      <header style={{ position: "relative" }}>
         <h1 className="header-title">Sistema de Información Vehicular</h1>
         <p className="header-subtitle">CRT</p>
+
+        {/* 🔒 Botón de Logout */}
+        <button
+          onClick={handleLogout}
+          style={{
+            position: "absolute",
+            top: "10px",
+            right: "10px",
+            backgroundColor: "#dc3545",
+            color: "white",
+            border: "none",
+            borderRadius: "5px",
+            padding: "8px 12px",
+            cursor: "pointer",
+            display: "flex",
+            alignItems: "center",
+            gap: "5px",
+          }}
+        >
+          <LogOut size={16} />
+          Cerrar sesión
+        </button>
       </header>
 
       <div className="button-group">

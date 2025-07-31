@@ -87,3 +87,34 @@ select.form-control:focus {
   z-index: 10;
   pointer-events: none;
 }
+
+.tabla-historial {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+.tabla-historial th, .tabla-historial td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: center;
+}
+
+.tabla-historial th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+
+.btn-incidente {
+  background-color: #d9534f;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.btn-incidente:hover {
+  background-color: #c9302c;
+}

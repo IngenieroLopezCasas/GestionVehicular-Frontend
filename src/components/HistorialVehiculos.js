@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
-import Select from "react-select";
+import React, { useState } from "react";
 import api from "../services/api";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { QrReader } from "react-qr-reader";
 import "./App.css";
 
@@ -14,6 +13,8 @@ const HistorialVehiculos = () => {
     fechaInicio: "",
     fechaFin: "",
   });
+
+  const navigate = useNavigate();
 
   const handleQrReadFromCodigo = async (codigoQR) => {
     const isNumeric = /^\d+$/.test(codigoQR);
@@ -70,10 +71,7 @@ const HistorialVehiculos = () => {
     const fechaSalida = new Date(item.Salida);
     const inicio = filtro.fechaInicio ? new Date(filtro.fechaInicio) : null;
     const fin = filtro.fechaFin ? new Date(filtro.fechaFin) : null;
-    return (
-      (!inicio || fechaSalida >= inicio) &&
-      (!fin || fechaSalida <= fin)
-    );
+    return (!inicio || fechaSalida >= inicio) && (!fin || fechaSalida <= fin);
   });
 
   return (
@@ -148,13 +146,14 @@ const HistorialVehiculos = () => {
 
           <div className="history-table">
             <h3>Historial de Desplazamientos</h3>
-            <table>
+            <table className="tabla-historial">
               <thead>
                 <tr>
                   <th>Salida</th>
                   <th>Entrada</th>
                   <th>KM (S → E)</th>
                   <th>Tanque (S → E)</th>
+                  <th>Evento</th>
                 </tr>
               </thead>
               <tbody>
@@ -164,6 +163,17 @@ const HistorialVehiculos = () => {
                     <td>{h.Entrada ? new Date(h.Entrada).toLocaleString() : "No registrada"}</td>
                     <td>{h.KmSalida} → {h.KmEntrada ?? "?"}</td>
                     <td>{h.TanqueSalida} → {h.TanqueEntrada ?? "?"}</td>
+                    <td>
+                      <button
+                        onClick={() => {
+                          console.log("Navegando a evento con IdDesplazamiento:", h.IdDesplazamiento);
+                          navigate(`/evento/${h.IdDesplazamiento}`, { state: { registro: h } });
+                        }}
+                        className="btn-incidente"
+                      >
+                        Añadir Evento
+                      </button>
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -172,7 +182,9 @@ const HistorialVehiculos = () => {
         </>
       )}
 
-      <Link to="/" className="btn-cancel">Volver al inicio</Link>
+      <Link to="/" className="btn-cancel">
+        Volver al inicio
+      </Link>
     </div>
   );
 };

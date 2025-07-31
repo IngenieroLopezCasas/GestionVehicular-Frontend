@@ -297,3 +297,146 @@ input, textarea, select {
   padding: 10px;
   border-radius: 6px;
 }
+.tabla-historial {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  font-size: 15px;
+}
+
+.tabla-historial th,
+.tabla-historial td {
+  border: 1px solid #999;
+  padding: 12px 8px;
+  text-align: center;
+}
+
+.tabla-historial thead {
+  background-color: #eaeaea;
+}
+
+.tabla-historial tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.tabla-historial tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+.btn-incidente {
+  background-color: #f57c00;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn-incidente:hover {
+  background-color: #ef6c00;
+}
+.form-container {
+  max-width: 600px;
+  margin: auto;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.form-group textarea,
+.form-group input[type="file"] {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+}
+
+.btn-guardar {
+  background-color: #388e3c;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 4px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.btn-guardar:hover {
+  background-color: #2e7d32;
+}
+.form-container {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background-color: #f7f7f7;
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+}
+
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #333;
+}
+
+textarea {
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+input[type="file"] {
+  font-size: 1rem;
+  padding: 0.3rem 0;
+}
+
+.btn-guardar {
+  background-color: #007bff;
+  border: none;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-guardar:hover {
+  background-color: #0056b3;
+}
+
+.btn-cancelar {
+  background-color: #6c757d;
+  border: none;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-cancelar:hover {
+  background-color: #5a6268;
+}
