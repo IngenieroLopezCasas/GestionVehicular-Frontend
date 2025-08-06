@@ -1,4 +1,3 @@
-// src/components/Login.jsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
@@ -15,7 +14,7 @@ const Login = () => {
     // Login rápido para admin/admin
     if (usuario === "admin" && contrasena === "admin") {
       const usuarioCompleto = {
-        nombre: "Adminitrador Lopez ",
+        nombre: "Administrador Lopez",
         rol: "administrador",
         usuarioInterno: true,
       };
@@ -24,7 +23,6 @@ const Login = () => {
       return;
     }
 
-    // Login normal vía API
     try {
       const response = await api.post(
         "https://intranet.tequila.org.mx/intranetlogin/api/Auth/ConCredenciales",
@@ -36,22 +34,30 @@ const Login = () => {
 
       const datos = response.data;
 
+      console.log("Datos recibidos del backend:", datos);
+
       if (
         datos?.result?.success === true &&
         datos.result.user?.usuarioInterno === true
       ) {
+        const rolRecibido = datos.result.user.idTipoUsuario;
+        console.log("ROL RECIBIDO:", rolRecibido);
+
+        // const rolNormalizado = (rolRecibido || "usuario").toLowerCase();
+        // console.log("ROL NORMALIZADO:", rolNormalizado);
+
         const usuarioCompleto = {
           nombre: datos.result.user.nombre,
-          rol: (datos.result.user.rol || "usuario").toLowerCase(),
+          rol: rolRecibido,
           ...datos.result.user,
         };
 
         localStorage.setItem("usuario", JSON.stringify(usuarioCompleto));
 
-        if (usuarioCompleto.rol === "administrador" || usuarioCompleto.rol === "admin") {
-          navigate("/admin");
-        } else if (usuarioCompleto.rol === "vigilante") {
-          navigate("/vigilante");
+        if (rolRecibido === 1) {
+          navigate("/");
+        } else if (rolRecibido === 3) {
+          navigate("/");
         } else {
           navigate("/");
         }

@@ -92,7 +92,7 @@ const Home = () => {
         <Link to="/salida-vehiculo" className="btn btn-secondary mt-4">Registrar Salida</Link>
         <Link to="/bitacora" className="btn btn-secondary mt-4">Registrar Entrada</Link>
 
-        {rol === "administrador" && (
+        {rol === 1 && (
           <>
             <Link to="/checklist" className="btn btn-secondary mt-4">CheckList</Link>
             <Link to="/historial-vehiculos" className="btn btn-secondary mt-4">Historial</Link>
@@ -153,7 +153,7 @@ const Home = () => {
         </div>
       </div>
 
-      {rol === "administrador" && (
+      {rol === 1 && (
         <Link to="/add-vehicle" className="floating-button" title="Agregar">
           <Plus size={24} />
         </Link>
