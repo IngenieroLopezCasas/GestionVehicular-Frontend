@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
-import api from "../services/api"; // Axios personalizado
+import api from "../services/api";
 
 const Login = () => {
   const [usuario, setUsuario] = useState("");
@@ -12,10 +12,20 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      console.log("Usuario:", usuario);
-      console.log("Contraseña:", contrasena);
+    // Login rápido para admin/admin
+    if (usuario === "admin" && contrasena === "admin") {
+      const usuarioCompleto = {
+        nombre: "Adminitrador Lopez ",
+        rol: "administrador",
+        usuarioInterno: true,
+      };
+      localStorage.setItem("usuario", JSON.stringify(usuarioCompleto));
+      navigate("/");
+      return;
+    }
 
+    // Login normal vía API
+    try {
       const response = await api.post(
         "https://intranet.tequila.org.mx/intranetlogin/api/Auth/ConCredenciales",
         {
@@ -25,20 +35,26 @@ const Login = () => {
       );
 
       const datos = response.data;
-      console.log(response)
 
-      // Validación de autenticación y tipo de usuario
       if (
         datos?.result?.success === true &&
         datos.result.user?.usuarioInterno === true
       ) {
-        const usuarioCompleto = datos.result.user;
+        const usuarioCompleto = {
+          nombre: datos.result.user.nombre,
+          rol: (datos.result.user.rol || "usuario").toLowerCase(),
+          ...datos.result.user,
+        };
 
-        // Guardar datos del usuario (puede usarse luego en el sistema)
         localStorage.setItem("usuario", JSON.stringify(usuarioCompleto));
 
-        alert("✅ Sesión iniciada correctamente.");
-        navigate("/");
+        if (usuarioCompleto.rol === "administrador" || usuarioCompleto.rol === "admin") {
+          navigate("/admin");
+        } else if (usuarioCompleto.rol === "vigilante") {
+          navigate("/vigilante");
+        } else {
+          navigate("/");
+        }
       } else {
         alert("❌ Acceso denegado: Usuario inválido o no autorizado.");
       }

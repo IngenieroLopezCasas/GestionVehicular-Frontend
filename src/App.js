@@ -13,6 +13,7 @@ import HistorialVehiculos from "./components/HistorialVehiculos";
 import FormularioEvento from "./components/FormularioEvento";
 import CapturaFotos from "./components/CapturaFotos";
 import Login from "./components/Login";
+import AsignarRol from "./components/AsignarRol";
 
 // 🛡️ Importar la ruta protegida
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -118,6 +119,14 @@ function App() {
           element={
             <ProtectedRoute>
               <CapturaFotos />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/asignar-rol"
+          element={
+            <ProtectedRoute>
+              <AsignarRol />
             </ProtectedRoute>
           }
         />

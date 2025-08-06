@@ -440,3 +440,28 @@ input[type="file"] {
 .btn-cancelar:hover {
   background-color: #5a6268;
 }
+
+.asignar-rol-container {
+  max-width: 500px;
+  margin: auto;
+  padding: 20px;
+  border: 2px solid #ccc;
+  border-radius: 15px;
+  background-color: #f9f9f9;
+}
+
+.asignar-rol-container h2 {
+  text-align: center;
+}
+
+.asignar-rol-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.asignar-rol-container select,
+.asignar-rol-container button {
+  padding: 10px;
+  font-size: 16px;
+}

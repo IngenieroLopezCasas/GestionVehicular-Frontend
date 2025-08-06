@@ -1,7 +1,7 @@
 // Home.js
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom"; // AÑADIDO useNavigate
-import { Plus, Edit, Trash, LogOut } from "lucide-react"; // AÑADIDO LogOut
+import { Link, useNavigate } from "react-router-dom";
+import { Plus, Edit, Trash, LogOut } from "lucide-react";
 import api from "../services/api";
 import "./App.css";
 
@@ -9,12 +9,21 @@ const Home = () => {
   const [vehicles, setVehicles] = useState([]);
   const [expandedCardId, setExpandedCardId] = useState(null);
   const [historial, setHistorial] = useState([]);
-  const navigate = useNavigate(); // NUEVO
+  const [nombreUsuario, setNombreUsuario] = useState("");
+  const [rol, setRol] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     api.get("/vehicles")
       .then((res) => setVehicles(res.data))
       .catch((err) => console.error("Error al obtener vehículos", err));
+
+    const usuarioGuardado = localStorage.getItem("usuario");
+    if (usuarioGuardado) {
+      const usuario = JSON.parse(usuarioGuardado);
+      setNombreUsuario(usuario.nombre);
+      setRol(usuario.rol);
+    }
   }, []);
 
   const deleteVehicle = (id) => {
@@ -45,7 +54,6 @@ const Home = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("usuario");
-    alert("👋 Sesión cerrada correctamente.");
     navigate("/login");
   };
 
@@ -54,8 +62,10 @@ const Home = () => {
       <header style={{ position: "relative" }}>
         <h1 className="header-title">Sistema de Información Vehicular</h1>
         <p className="header-subtitle">CRT</p>
+        <p style={{ fontWeight: "bold", fontSize: "18px", marginTop: "10px" }}>
+          Bienvenido, {nombreUsuario}
+        </p>
 
-        {/* 🔒 Botón de Logout */}
         <button
           onClick={handleLogout}
           style={{
@@ -81,8 +91,13 @@ const Home = () => {
       <div className="button-group">
         <Link to="/salida-vehiculo" className="btn btn-secondary mt-4">Registrar Salida</Link>
         <Link to="/bitacora" className="btn btn-secondary mt-4">Registrar Entrada</Link>
-        <Link to="/checklist" className="btn btn-secondary mt-4">CheckList</Link>
-        <Link to="/historial-vehiculos" className="btn btn-secondary mt-4">Historial</Link>
+
+        {rol === "administrador" && (
+          <>
+            <Link to="/checklist" className="btn btn-secondary mt-4">CheckList</Link>
+            <Link to="/historial-vehiculos" className="btn btn-secondary mt-4">Historial</Link>
+          </>
+        )}
       </div>
 
       <div className="main-content">
@@ -103,8 +118,13 @@ const Home = () => {
               </div>
 
               <div className="card-image">
-                <span>No Image</span>
+                <img
+                  src="/images/versa.jpeg"
+                  alt="Sin imagen"
+                  style={{ width: "100%", height: "auto", objectFit: "cover" }}
+                />
               </div>
+
 
               <h3 className="card-title">{vehicle.Marca} {vehicle.Submarca}</h3>
               <p className="card-text">{vehicle.Modelo} - {vehicle.Placas}</p>
@@ -133,9 +153,11 @@ const Home = () => {
         </div>
       </div>
 
-      <Link to="/add-vehicle" className="floating-button" title="Agregar">
-        <Plus size={24} />
-      </Link>
+      {rol === "administrador" && (
+        <Link to="/add-vehicle" className="floating-button" title="Agregar">
+          <Plus size={24} />
+        </Link>
+      )}
     </div>
   );
 };
